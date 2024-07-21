@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LocalSearchEngine.Converters" 
+             xmlns:vm="clr-namespace:LocalSearchEngine.ViewModels"
+             xmlns:datatemplateselectors="clr-namespace:LocalSearchEngine.DataTemplateSelectors" 
+             xmlns:components="clr-namespace:LocalSearchEngine.Views.Components"
+             x:Class="LocalSearchEngine.MainPage">
+    <ContentPage.Resources>
+        <converters:EnumToDescriptionConverter x:Key="EnumToDescriptionConverter" />
+
+        <ResourceDictionary>
+            <DataTemplate x:Key="SearchQueryTermTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" 
+                        Text="{Binding Begin, Converter={StaticResource EnumToDescriptionConverter}, Mode=OneWay}"
+                        Command="{Binding ToggleBeginCommand}" />
+                    <Entry Grid.Column="1" 
+                       Text="{Binding Term, Mode=TwoWay}" />
+                    <Button Grid.Column="2" 
+                        Text="{Binding End, Converter={StaticResource EnumToDescriptionConverter}, Mode=OneWay}"
+                        Command="{Binding ToggleEndCommand}" />
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="SearchQueryOperatorTemplate">
+                <Label Text="{Binding Op}"
+                   FontAttributes="Bold" />
+            </DataTemplate>
+            <datatemplateselectors:SearchQuery x:Key="SearchQueryDataTemplateSelector"
+                                           TermTemplate="{StaticResource SearchQueryTermTemplate}"
+                                           OperatorTemplate="{StaticResource SearchQueryOperatorTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout>
+            <StackLayout BindableLayout.ItemsSource="{Binding SearchQueries}"
+                 BindableLayout.ItemTemplateSelector="{StaticResource SearchQueryDataTemplateSelector}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="AND"
+                Command="{Binding AndCommand}"
+                Grid.Row="0"
+                Grid.Column="0" />
+                <Button Text="OR"
+                Command="{Binding OrCommand}"
+                Grid.Row="0"
+                Grid.Column="1" />
+                <Button Text="NOT"
+                Command="{Binding NotCommand}"
+                Grid.Row="0"
+                Grid.Column="2" />
+                <Button Text="Search"
+                Command="{Binding SearchCommand}"
+                Grid.Row="1"
+                Grid.Column="0" />
+                <Button Text="Clear"
+                Command="{Binding ClearCommand}"
+                Grid.Row="1"
+                Grid.Column="1" />
+                <Button Text="Modify Data"
+                Clicked="OnModifyDataButtonClicked" 
+                Grid.Row="1"
+                Grid.Column="2" />
+            </Grid>
+
+            <components:SearchResultsView BindingContext="{Binding SearchResultsViewModel}"/>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

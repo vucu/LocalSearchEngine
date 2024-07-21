@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LocalSearchEngine.Views.SearchResultPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <HtmlWebViewSource x:Key="SearchResultHtmlViewSource"
+                               Html="{Binding Html}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <WebView Source="{StaticResource SearchResultHtmlViewSource}" />
+    </ContentPage.Content>
+</ContentPage>

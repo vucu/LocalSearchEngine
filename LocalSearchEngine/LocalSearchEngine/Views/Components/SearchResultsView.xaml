@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:LocalSearchEngine.Controls"
+             x:Class="LocalSearchEngine.Views.Components.SearchResultsView">
+  <ContentView.Content>
+      <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label FontSize="Small"
+                       Text="{Binding Count}" />
+                <Label FontSize="Small"
+                       Text="results" />
+            </StackLayout>
+
+            <StackLayout x:Name="PageLayout" 
+                         BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <controls:SearchResultHyperlink FontSize="Large" 
+                                                            Text="{Binding Title}">
+                            </controls:SearchResultHyperlink>
+                            <Label Text="{Binding Excerpt}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Text="&lt; Prev"
+                        Command="{Binding PreviousCommand}" 
+                        Grid.Column="0" />
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             Grid.Column="1">
+                    <Picker ItemsSource="{Binding Pages}"
+                            SelectedItem="{Binding CurrentPage, Mode=TwoWay}"
+                            VerticalOptions="Center"  />
+                    <Label Text="/"
+                           VerticalOptions="Center" />
+                    <Label Text="{Binding MaxPage}"
+                           VerticalOptions="Center"  />
+                </StackLayout>
+                <Button Text="Next &gt;"
+                        Command="{Binding NextCommand}"
+                        Grid.Column="2" />
+            </Grid>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

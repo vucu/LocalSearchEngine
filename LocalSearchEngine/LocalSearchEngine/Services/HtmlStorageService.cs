@@ -28,7 +28,7 @@ namespace LocalSearchEngine.Services
             indexFolder = applicationSettingsService.IndexFolder;
         }
 
-        public void DownloadAndStoreZipFile(string url)
+        public void DownloadAndStoreZipFile(string url, IProgress<DownloadProgress> progress)
         {
             url = url.Trim();
             var result = uriService.TryCreate(url);

@@ -7,7 +7,7 @@ namespace LocalSearchEngine.Core
 {
     public interface IHtmlStorageService
     {
-        void DownloadAndStoreZipFile(string url);
+        void DownloadAndStoreZipFile(string url, IProgress<DownloadProgress> progress);
         IEnumerable<ExtendedHtmlDocument> GetStoredHtmlDocuments();
         ExtendedHtmlDocument GetStoredHtmlDocument(string fileName);
         string ReadFile(int id);
